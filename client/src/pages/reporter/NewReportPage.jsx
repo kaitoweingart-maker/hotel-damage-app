@@ -17,6 +17,7 @@ const HOTELS = [
 export default function NewReportPage() {
   const { user } = useAuth();
   const navigate = useNavigate();
+  const userHotelLocked = !!user.hotel;
   const [hotel, setHotel] = useState(user.hotel || '');
   const [room, setRoom] = useState('');
   const [description, setDescription] = useState('');
@@ -81,17 +82,23 @@ export default function NewReportPage() {
 
         <div>
           <label className="block text-sm font-medium text-gray-700 mb-1">Hotel *</label>
-          <select
-            value={hotel}
-            onChange={(e) => setHotel(e.target.value)}
-            className="w-full border rounded-lg px-3 py-2 focus:ring-2 focus:ring-brand-500 focus:outline-none"
-            required
-          >
-            <option value="">Bitte wählen...</option>
-            {HOTELS.map((h) => (
-              <option key={h.code} value={h.code}>{h.name} ({h.code})</option>
-            ))}
-          </select>
+          {userHotelLocked ? (
+            <div className="w-full border rounded-lg px-3 py-2 bg-gray-100 text-gray-700">
+              {HOTELS.find((h) => h.code === hotel)?.name || hotel}
+            </div>
+          ) : (
+            <select
+              value={hotel}
+              onChange={(e) => setHotel(e.target.value)}
+              className="w-full border rounded-lg px-3 py-2 focus:ring-2 focus:ring-brand-500 focus:outline-none"
+              required
+            >
+              <option value="">Bitte wählen...</option>
+              {HOTELS.map((h) => (
+                <option key={h.code} value={h.code}>{h.name} ({h.code})</option>
+              ))}
+            </select>
+          )}
         </div>
 
         <div>

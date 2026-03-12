@@ -41,10 +41,14 @@ router.get('/', authenticate, (req, res) => {
   `;
   const params = [];
 
-  // Role-based filtering
+  // Role-based filtering: reporters only see their own hotel's tickets
   if (req.user.role === 'reporter') {
     sql += ' AND t.reporter_id = ?';
     params.push(req.user.id);
+    if (req.user.hotel) {
+      sql += ' AND t.hotel = ?';
+      params.push(req.user.hotel);
+    }
   }
 
   if (status) { sql += ' AND t.status = ?'; params.push(status); }
@@ -67,7 +71,12 @@ router.get('/', authenticate, (req, res) => {
 // POST /api/tickets
 router.post('/', authenticate, authorize('reporter', 'admin'), upload.array('images', 5), (req, res) => {
   const db = getDb();
-  const { hotel, room, description, urgency } = req.body;
+  let { hotel, room, description, urgency } = req.body;
+
+  // Reporters with assigned hotel can only create tickets for their hotel
+  if (req.user.role === 'reporter' && req.user.hotel) {
+    hotel = req.user.hotel;
+  }
 
   if (!hotel || !room || !description) {
     return res.status(400).json({ error: 'hotel, room, and description are required' });
