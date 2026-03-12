@@ -112,7 +112,7 @@ export default function TicketDetailPage() {
             {ticket.status === 'open' && (
               <button
                 onClick={() => updateStatus('in_progress')}
-                className="bg-blue-600 text-white px-4 py-2 rounded-lg text-sm hover:bg-blue-700"
+                className="bg-brand-600 text-white px-4 py-2 rounded-lg text-sm hover:bg-brand-700"
               >
                 Annehmen
               </button>
@@ -179,7 +179,7 @@ export default function TicketDetailPage() {
                   className="w-full h-32 object-cover rounded-lg"
                 />
                 <span className={`absolute top-1 left-1 text-xs px-2 py-0.5 rounded ${
-                  img.type === 'completion' ? 'bg-green-500 text-white' : 'bg-blue-500 text-white'
+                  img.type === 'completion' ? 'bg-green-500 text-white' : 'bg-brand-500 text-white'
                 }`}>
                   {img.type === 'completion' ? 'Fertigstellung' : 'Meldung'}
                 </span>
@@ -225,11 +225,11 @@ export default function TicketDetailPage() {
             value={comment}
             onChange={(e) => setComment(e.target.value)}
             placeholder="Kommentar hinzufügen..."
-            className="flex-1 border rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none"
+            className="flex-1 border rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-brand-500 focus:outline-none"
           />
           <button
             type="submit"
-            className="bg-blue-600 text-white px-4 py-2 rounded-lg text-sm hover:bg-blue-700"
+            className="bg-brand-600 text-white px-4 py-2 rounded-lg text-sm hover:bg-brand-700"
           >
             Senden
           </button>

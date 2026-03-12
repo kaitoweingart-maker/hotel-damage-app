@@ -82,7 +82,7 @@ export default function NewReportPage() {
           <select
             value={hotel}
             onChange={(e) => setHotel(e.target.value)}
-            className="w-full border rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:outline-none"
+            className="w-full border rounded-lg px-3 py-2 focus:ring-2 focus:ring-brand-500 focus:outline-none"
             required
           >
             <option value="">Bitte wählen...</option>
@@ -99,7 +99,7 @@ export default function NewReportPage() {
             value={room}
             onChange={(e) => setRoom(e.target.value)}
             placeholder="z.B. 201, Lobby, Küche"
-            className="w-full border rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:outline-none"
+            className="w-full border rounded-lg px-3 py-2 focus:ring-2 focus:ring-brand-500 focus:outline-none"
             required
           />
         </div>
@@ -111,7 +111,7 @@ export default function NewReportPage() {
             onChange={(e) => setDescription(e.target.value)}
             rows={4}
             placeholder="Beschreiben Sie den Schaden..."
-            className="w-full border rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:outline-none"
+            className="w-full border rounded-lg px-3 py-2 focus:ring-2 focus:ring-brand-500 focus:outline-none"
             required
           />
         </div>
@@ -152,7 +152,7 @@ export default function NewReportPage() {
         <button
           type="submit"
           disabled={submitting}
-          className="w-full bg-blue-600 text-white py-3 rounded-lg font-medium hover:bg-blue-700 disabled:opacity-50"
+          className="w-full bg-brand-600 text-white py-3 rounded-lg font-medium hover:bg-brand-700 disabled:opacity-50"
         >
           {submitting ? 'Wird gesendet...' : 'Schadensmeldung absenden'}
         </button>

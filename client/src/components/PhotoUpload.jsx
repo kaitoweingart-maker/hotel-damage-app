@@ -44,7 +44,7 @@ export default function PhotoUpload({ files, setFiles, maxFiles = 5 }) {
         <button
           type="button"
           onClick={() => inputRef.current?.click()}
-          className="border-2 border-dashed border-gray-300 rounded-lg p-4 w-full text-center text-gray-500 hover:border-blue-400 hover:text-blue-500"
+          className="border-2 border-dashed border-gray-300 rounded-lg p-4 w-full text-center text-gray-500 hover:border-brand-400 hover:text-brand-500"
         >
           Foto hinzufugen ({files.length}/{maxFiles})
         </button>

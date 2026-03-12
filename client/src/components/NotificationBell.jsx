@@ -60,7 +60,7 @@ export default function NotificationBell() {
                 key={n.id}
                 onClick={() => markRead(n)}
                 className={`w-full text-left px-3 py-2 text-sm border-b hover:bg-gray-50 ${
-                  !n.read ? 'bg-blue-50 font-medium' : 'text-gray-600'
+                  !n.read ? 'bg-brand-50 font-medium' : 'text-gray-600'
                 }`}
               >
                 <div>{n.message}</div>

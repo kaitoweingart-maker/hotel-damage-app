@@ -23,14 +23,14 @@ export default function Layout() {
   const links = NAV[user.role] || [];
 
   return (
-    <div className="min-h-screen flex flex-col">
-      <header className="bg-blue-700 text-white shadow-md">
+    <div className="min-h-screen flex flex-col bg-gray-50">
+      <header className="bg-brand-700 text-white shadow-md">
         <div className="max-w-5xl mx-auto px-4 py-3 flex items-center justify-between">
           <Link to="/" className="font-bold text-lg">Schadensmeldung</Link>
           <div className="flex items-center gap-3">
             <NotificationBell />
             <span className="text-sm hidden sm:inline">{user.name}</span>
-            <button onClick={logout} className="text-sm bg-blue-800 px-3 py-1 rounded hover:bg-blue-900">
+            <button onClick={logout} className="text-sm bg-brand-800 px-3 py-1 rounded hover:bg-brand-900">
               Logout
             </button>
           </div>
@@ -41,7 +41,7 @@ export default function Layout() {
               key={l.to}
               to={l.to}
               className={`text-sm pb-1 border-b-2 ${
-                location.pathname === l.to ? 'border-white' : 'border-transparent hover:border-blue-300'
+                location.pathname === l.to ? 'border-white' : 'border-transparent hover:border-brand-300'
               }`}
             >
               {l.label}

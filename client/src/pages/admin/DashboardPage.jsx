@@ -40,7 +40,7 @@ export default function AdminDashboard() {
           <div className="text-sm text-gray-500">Offen</div>
         </div>
         <div className="bg-white rounded-lg p-4 shadow-sm border">
-          <div className="text-3xl font-bold text-blue-600">{stats.inProgress}</div>
+          <div className="text-3xl font-bold text-brand-600">{stats.inProgress}</div>
           <div className="text-sm text-gray-500">In Bearbeitung</div>
         </div>
         <div className="bg-white rounded-lg p-4 shadow-sm border">
@@ -69,7 +69,7 @@ export default function AdminDashboard() {
       <div className="bg-white rounded-lg shadow-sm border p-6">
         <div className="flex items-center justify-between mb-3">
           <h2 className="font-bold text-gray-800">Neueste Tickets</h2>
-          <Link to="/tickets" className="text-sm text-blue-600 hover:underline">Alle anzeigen</Link>
+          <Link to="/tickets" className="text-sm text-brand-600 hover:underline">Alle anzeigen</Link>
         </div>
         <div className="space-y-2">
           {stats.recentTickets.map((t) => (

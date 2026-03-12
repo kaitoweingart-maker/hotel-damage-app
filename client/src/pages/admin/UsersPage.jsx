@@ -69,7 +69,7 @@ export default function UsersPage() {
     <div>
       <div className="flex items-center justify-between mb-6">
         <h1 className="text-2xl font-bold text-gray-800">Benutzerverwaltung</h1>
-        <button onClick={openCreate} className="bg-blue-600 text-white px-4 py-2 rounded-lg text-sm hover:bg-blue-700">
+        <button onClick={openCreate} className="bg-brand-600 text-white px-4 py-2 rounded-lg text-sm hover:bg-brand-700">
           + Neuer Benutzer
         </button>
       </div>
@@ -140,7 +140,7 @@ export default function UsersPage() {
               </select>
             </div>
             <div className="flex gap-2 pt-2">
-              <button type="submit" className="bg-blue-600 text-white px-4 py-2 rounded-lg text-sm hover:bg-blue-700">
+              <button type="submit" className="bg-brand-600 text-white px-4 py-2 rounded-lg text-sm hover:bg-brand-700">
                 Speichern
               </button>
               <button type="button" onClick={() => setShowForm(false)} className="bg-gray-100 text-gray-700 px-4 py-2 rounded-lg text-sm">
@@ -171,7 +171,7 @@ export default function UsersPage() {
                 <td className="px-4 py-3">
                   <span className={`inline-block px-2 py-0.5 rounded text-xs font-medium ${
                     u.role === 'admin' ? 'bg-purple-100 text-purple-800' :
-                    u.role === 'technician' ? 'bg-blue-100 text-blue-800' :
+                    u.role === 'technician' ? 'bg-brand-100 text-brand-800' :
                     'bg-gray-100 text-gray-800'
                   }`}>
                     {ROLE_LABELS[u.role]}
@@ -179,7 +179,7 @@ export default function UsersPage() {
                 </td>
                 <td className="px-4 py-3 text-gray-500">{u.hotel || '-'}</td>
                 <td className="px-4 py-3 text-right">
-                  <button onClick={() => openEdit(u)} className="text-blue-600 hover:underline text-sm mr-3">
+                  <button onClick={() => openEdit(u)} className="text-brand-600 hover:underline text-sm mr-3">
                     Bearbeiten
                   </button>
                   <button onClick={() => deleteUser(u)} className="text-red-600 hover:underline text-sm">

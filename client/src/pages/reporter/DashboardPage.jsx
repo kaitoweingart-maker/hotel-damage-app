@@ -23,7 +23,7 @@ export default function ReporterDashboard() {
         <h1 className="text-2xl font-bold text-gray-800">Meine Meldungen</h1>
         <Link
           to="/reporter/new"
-          className="bg-blue-600 text-white px-4 py-2 rounded-lg font-medium hover:bg-blue-700"
+          className="bg-brand-600 text-white px-4 py-2 rounded-lg font-medium hover:bg-brand-700"
         >
           + Neue Meldung
         </Link>
@@ -39,7 +39,7 @@ export default function ReporterDashboard() {
           <div className="text-sm text-gray-500">Offen</div>
         </div>
         <div className="bg-white rounded-lg p-4 text-center shadow-sm border">
-          <div className="text-2xl font-bold text-blue-600">{inProgress}</div>
+          <div className="text-2xl font-bold text-brand-600">{inProgress}</div>
           <div className="text-sm text-gray-500">In Arbeit</div>
         </div>
       </div>
@@ -49,7 +49,7 @@ export default function ReporterDashboard() {
       ) : tickets.length === 0 ? (
         <div className="text-center py-12 text-gray-500">
           <p className="mb-4">Noch keine Meldungen erstellt</p>
-          <Link to="/reporter/new" className="text-blue-600 hover:underline">
+          <Link to="/reporter/new" className="text-brand-600 hover:underline">
             Erste Schadensmeldung erstellen
           </Link>
         </div>
