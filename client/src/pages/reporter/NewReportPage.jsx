@@ -10,6 +10,8 @@ const HOTELS = [
   { code: 'GNBE', name: 'Solothurn' },
   { code: 'NYAL', name: 'Nyon' },
   { code: 'HCSI', name: 'Chalet Swiss' },
+  { code: 'PRZA', name: 'Prize by Radisson' },
+  { code: 'MUBRIG', name: 'Hotel Mulin' },
 ];
 
 export default function NewReportPage() {

@@ -137,6 +137,8 @@ export default function UsersPage() {
                 <option value="GNBE">Solothurn</option>
                 <option value="NYAL">Nyon</option>
                 <option value="HCSI">Chalet Swiss</option>
+                <option value="PRZA">Prize by Radisson</option>
+                <option value="MUBRIG">Hotel Mulin</option>
               </select>
             </div>
             <div className="flex gap-2 pt-2">

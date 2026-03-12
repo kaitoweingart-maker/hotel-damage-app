@@ -50,6 +50,8 @@ export default function TicketListPage() {
           <option value="GNBE">Solothurn</option>
           <option value="NYAL">Nyon</option>
           <option value="HCSI">Chalet Swiss</option>
+          <option value="PRZA">Prize by Radisson</option>
+          <option value="MUBRIG">Hotel Mulin</option>
         </select>
       </div>
 

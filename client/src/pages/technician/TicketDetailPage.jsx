@@ -11,6 +11,8 @@ const HOTEL_NAMES = {
   GNBE: 'Solothurn',
   NYAL: 'Nyon',
   HCSI: 'Chalet Swiss',
+  PRZA: 'Prize by Radisson',
+  MUBRIG: 'Hotel Mulin',
 };
 
 export default function TicketDetailPage() {

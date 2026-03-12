@@ -19,8 +19,8 @@ const insertUser = db.prepare(
 
 insertUser.run('julian', hash('Amanthos12.'), 'Julian', 'admin', null);
 insertUser.run('kaito', hash('Amanthos12.'), 'Kaito', 'admin', null);
-insertUser.run('prize', hash('12345'), 'Prize', 'reporter', 'GBAL');
-insertUser.run('mulin', hash('12345'), 'Mulin', 'reporter', 'GNBE');
+insertUser.run('prize', hash('12345'), 'Prize', 'reporter', 'PRZA');
+insertUser.run('mulin', hash('12345'), 'Mulin', 'reporter', 'MUBRIG');
 insertUser.run('rabo', hash('12345'), 'Rabo', 'technician', null);
 
 // Insert sample tickets
@@ -29,9 +29,9 @@ const insertTicket = db.prepare(
    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`
 );
 
-insertTicket.run('TKT-20260310-001', 'GBAL', '201', 'Wasserhahn tropft im Badezimmer', 'normal', 'open', 3, null, '2026-03-10 09:30:00');
-insertTicket.run('TKT-20260310-002', 'GBAL', '105', 'Fenster lässt sich nicht schliessen', 'high', 'in_progress', 3, 5, '2026-03-10 14:15:00');
-insertTicket.run('TKT-20260311-001', 'GNBE', '302', 'Lampe im Flur defekt', 'low', 'open', 4, null, '2026-03-11 08:00:00');
+insertTicket.run('TKT-20260310-001', 'PRZA', '201', 'Wasserhahn tropft im Badezimmer', 'normal', 'open', 3, null, '2026-03-10 09:30:00');
+insertTicket.run('TKT-20260310-002', 'PRZA', '105', 'Fenster lässt sich nicht schliessen', 'high', 'in_progress', 3, 5, '2026-03-10 14:15:00');
+insertTicket.run('TKT-20260311-001', 'MUBRIG', '302', 'Lampe im Flur defekt', 'low', 'open', 4, null, '2026-03-11 08:00:00');
 insertTicket.run('TKT-20260311-002', 'GBAL', '410', 'Heizung funktioniert nicht', 'high', 'completed', 3, 5, '2026-03-11 10:45:00');
 
 // Insert sample comments
