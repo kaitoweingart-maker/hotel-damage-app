@@ -1,0 +1,11 @@
+{
+  "name": "hotel-damage-app",
+  "version": "1.0.0",
+  "scripts": {
+    "install:all": "cd server && npm install && cd ../client && npm install",
+    "build": "cd client && npm run build",
+    "seed": "cd server && node database/seed.js",
+    "start": "cd server && node index.js",
+    "render-build": "cd server && npm install && cd ../client && npm install && npm run build && cd ../server && node database/seed.js"
+  }
+}
