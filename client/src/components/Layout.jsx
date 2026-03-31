@@ -12,6 +12,7 @@ const NAV = {
   ],
   admin: [
     { to: '/admin', label: 'Dashboard' },
+    { to: '/admin/new', label: 'Neue Meldung' },
     { to: '/tickets', label: 'Tickets' },
     { to: '/admin/users', label: 'Benutzer' },
   ],

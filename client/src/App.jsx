@@ -8,6 +8,7 @@ import NewReportPage from './pages/reporter/NewReportPage';
 import TicketListPage from './pages/technician/TicketListPage';
 import TicketDetailPage from './pages/technician/TicketDetailPage';
 import AdminDashboard from './pages/admin/DashboardPage';
+import AdminNewReportPage from './pages/admin/NewReportPage';
 import UsersPage from './pages/admin/UsersPage';
 
 function HomeRedirect() {
@@ -41,6 +42,7 @@ export default function App() {
         <Route path="/tickets/:id" element={<ProtectedRoute roles={['technician', 'admin', 'reporter']}><TicketDetailPage /></ProtectedRoute>} />
         {/* Admin */}
         <Route path="/admin" element={<ProtectedRoute roles={['admin']}><AdminDashboard /></ProtectedRoute>} />
+        <Route path="/admin/new" element={<ProtectedRoute roles={['admin']}><AdminNewReportPage /></ProtectedRoute>} />
         <Route path="/admin/users" element={<ProtectedRoute roles={['admin']}><UsersPage /></ProtectedRoute>} />
       </Route>
     </Routes>

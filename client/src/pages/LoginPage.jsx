@@ -30,7 +30,7 @@ export default function LoginPage() {
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-brand-700 to-brand-900 px-4">
       <div className="bg-white rounded-xl shadow-xl p-8 w-full max-w-sm">
         <h1 className="text-2xl font-bold text-center text-gray-800 mb-1">Schadensmeldung</h1>
-        <p className="text-center text-gray-500 text-sm mb-6">Amanthos Living</p>
+        <p className="text-center text-gray-500 text-sm mb-6">Amanthos Hospitality Group</p>
 
         <form onSubmit={handleSubmit} className="space-y-4">
           {error && (
