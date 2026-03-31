@@ -13,7 +13,11 @@ const PORT = process.env.PORT || 3001;
 
 app.use(cors());
 app.use(express.json());
-app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+// Serve uploads from persistent disk on Render, or local folder in dev
+const uploadsDir = process.env.DB_PATH
+  ? path.join(path.dirname(process.env.DB_PATH), 'uploads')
+  : path.join(__dirname, 'uploads');
+app.use('/uploads', express.static(uploadsDir));
 
 // Routes
 app.use('/api/auth', authRoutes);

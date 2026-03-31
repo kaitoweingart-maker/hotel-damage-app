@@ -3,29 +3,49 @@ const { getDb } = require('./db');
 
 const db = getDb();
 
-// Clear all data and reset autoincrement
-db.exec('DELETE FROM notifications');
-db.exec('DELETE FROM ticket_comments');
-db.exec('DELETE FROM ticket_images');
-db.exec('DELETE FROM tickets');
-db.exec('DELETE FROM users');
-db.exec("DELETE FROM sqlite_sequence");
-
 const hash = (pw) => bcrypt.hashSync(pw, 10);
+
+// Only seed if database is empty (no users exist)
+const userCount = db.prepare('SELECT COUNT(*) as count FROM users').get().count;
+
+if (userCount > 0) {
+  console.log(`Database already has ${userCount} users — skipping seed to preserve data.`);
+
+  // Still ensure all required users exist (upsert)
+  const ensureUser = (username, pw, name, role, hotel) => {
+    const existing = db.prepare('SELECT id FROM users WHERE username = ?').get(username);
+    if (!existing) {
+      db.prepare('INSERT INTO users (username, password_hash, name, role, hotel) VALUES (?, ?, ?, ?, ?)')
+        .run(username, hash(pw), name, role, hotel);
+      console.log(`  Added missing user: ${username}`);
+    }
+  };
+
+  ensureUser('julian', 'Amanthos12.', 'Julian', 'admin', null);
+  ensureUser('kaito', 'Amanthos12.', 'Kaito', 'admin', null);
+  ensureUser('prize', '12345', 'Prize', 'reporter', 'PRZA');
+  ensureUser('mulin', '12345', 'Mulin', 'reporter', 'MUBRIG');
+  ensureUser('chalet', '12345', 'Chalet', 'reporter', 'HCSI');
+  ensureUser('rabo', '12345', 'Rabo', 'technician', null);
+
+  process.exit(0);
+}
+
+console.log('Empty database — running full seed...');
 
 // Insert users
 const insertUser = db.prepare(
   'INSERT INTO users (username, password_hash, name, role, hotel) VALUES (?, ?, ?, ?, ?)'
 );
 
-insertUser.run('julian', hash('Amanthos12.'), 'Julian', 'admin', null);     // 1
-insertUser.run('kaito', hash('Amanthos12.'), 'Kaito', 'admin', null);       // 2
-insertUser.run('prize', hash('12345'), 'Prize', 'reporter', 'PRZA');        // 3
-insertUser.run('mulin', hash('12345'), 'Mulin', 'reporter', 'MUBRIG');      // 4
-insertUser.run('chalet', hash('12345'), 'Chalet', 'reporter', 'HCSI');      // 5
-insertUser.run('rabo', hash('12345'), 'Rabo', 'technician', null);          // 6
+insertUser.run('julian', hash('Amanthos12.'), 'Julian', 'admin', null);
+insertUser.run('kaito', hash('Amanthos12.'), 'Kaito', 'admin', null);
+insertUser.run('prize', hash('12345'), 'Prize', 'reporter', 'PRZA');
+insertUser.run('mulin', hash('12345'), 'Mulin', 'reporter', 'MUBRIG');
+insertUser.run('chalet', hash('12345'), 'Chalet', 'reporter', 'HCSI');
+insertUser.run('rabo', hash('12345'), 'Rabo', 'technician', null);
 
-// Look up IDs to avoid hardcoding
+// Look up IDs
 const userId = (name) => db.prepare('SELECT id FROM users WHERE username = ?').get(name).id;
 const prize = userId('prize');
 const mulin = userId('mulin');
