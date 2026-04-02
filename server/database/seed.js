@@ -11,13 +11,16 @@ const userCount = db.prepare('SELECT COUNT(*) as count FROM users').get().count;
 if (userCount > 0) {
   console.log(`Database already has ${userCount} users — skipping seed to preserve data.`);
 
-  // Still ensure all required users exist (upsert)
+  // Still ensure all required users exist (upsert) and update hotel assignments
   const ensureUser = (username, pw, name, role, hotel) => {
-    const existing = db.prepare('SELECT id FROM users WHERE username = ?').get(username);
+    const existing = db.prepare('SELECT id, hotel FROM users WHERE username = ?').get(username);
     if (!existing) {
       db.prepare('INSERT INTO users (username, password_hash, name, role, hotel) VALUES (?, ?, ?, ?, ?)')
         .run(username, hash(pw), name, role, hotel);
       console.log(`  Added missing user: ${username}`);
+    } else if (existing.hotel !== hotel) {
+      db.prepare('UPDATE users SET hotel = ? WHERE username = ?').run(hotel, username);
+      console.log(`  Updated hotel for ${username}: ${existing.hotel} -> ${hotel}`);
     }
   };
 
@@ -26,7 +29,8 @@ if (userCount > 0) {
   ensureUser('prize', '12345', 'Prize', 'reporter', 'PRZA');
   ensureUser('mulin', '12345', 'Mulin', 'reporter', 'MUBRIG');
   ensureUser('chalet', '12345', 'Chalet', 'reporter', 'HCSI');
-  ensureUser('rabo', '12345', 'Rabo', 'technician', null);
+  ensureUser('rabo', '12345', 'Rabo', 'technician', 'MUBRIG');
+  ensureUser('tomek', '12345', 'Tomek', 'technician', null);
 
   process.exit(0);
 }
@@ -43,9 +47,10 @@ insertUser.run('kaito', hash('Amanthos12.'), 'Kaito', 'admin', null);
 insertUser.run('prize', hash('12345'), 'Prize', 'reporter', 'PRZA');
 insertUser.run('mulin', hash('12345'), 'Mulin', 'reporter', 'MUBRIG');
 insertUser.run('chalet', hash('12345'), 'Chalet', 'reporter', 'HCSI');
-insertUser.run('rabo', hash('12345'), 'Rabo', 'technician', null);
+insertUser.run('rabo', hash('12345'), 'Rabo', 'technician', 'MUBRIG');
+insertUser.run('tomek', hash('12345'), 'Tomek', 'technician', null);
 
 console.log('Database seeded — users only, no sample tickets.');
 console.log('Admins: julian/Amanthos12., kaito/Amanthos12.');
 console.log('Mitarbeiter: prize/12345, mulin/12345, chalet/12345');
-console.log('Handwerker: rabo/12345');
+console.log('Handwerker: rabo/12345 (MUBRIG), tomek/12345');
