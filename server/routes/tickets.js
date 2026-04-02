@@ -51,6 +51,12 @@ router.get('/', authenticate, (req, res) => {
     }
   }
 
+  // Technicians with a hotel assigned only see that hotel's tickets
+  if (req.user.role === 'technician' && req.user.hotel) {
+    sql += ' AND t.hotel = ?';
+    params.push(req.user.hotel);
+  }
+
   if (status) { sql += ' AND t.status = ?'; params.push(status); }
   if (hotel) { sql += ' AND t.hotel = ?'; params.push(hotel); }
   if (urgency) { sql += ' AND t.urgency = ?'; params.push(urgency); }
