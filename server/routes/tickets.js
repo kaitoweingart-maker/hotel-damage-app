@@ -65,10 +65,13 @@ router.get('/', authenticate, (req, res) => {
 
   const tickets = db.prepare(sql).all(...params);
 
-  // Attach image counts
+  // Attach image counts and first image
   const imgCount = db.prepare('SELECT COUNT(*) as c FROM ticket_images WHERE ticket_id = ?');
+  const firstImg = db.prepare('SELECT image_path FROM ticket_images WHERE ticket_id = ? ORDER BY created_at ASC LIMIT 1');
   for (const t of tickets) {
     t.image_count = imgCount.get(t.id).c;
+    const img = firstImg.get(t.id);
+    t.first_image = img ? img.image_path : null;
   }
 
   res.json(tickets);

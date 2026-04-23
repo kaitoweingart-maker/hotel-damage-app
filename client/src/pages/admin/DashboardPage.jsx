@@ -1,8 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import api from '../../api/client';
-import TicketStatusBadge from '../../components/TicketStatusBadge';
-import UrgencyBadge from '../../components/UrgencyBadge';
+import TicketCard from '../../components/TicketCard';
 
 const HOTEL_NAMES = {
   GBAL: 'Zurich Airport',
@@ -15,15 +14,20 @@ const HOTEL_NAMES = {
 
 export default function AdminDashboard() {
   const [stats, setStats] = useState(null);
+  const [recentTickets, setRecentTickets] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
 
-  async function loadStats() {
+  async function loadData() {
     setLoading(true);
     setError('');
     try {
-      const { data } = await api.get('/tickets/stats/overview');
-      setStats(data);
+      const [statsRes, ticketsRes] = await Promise.all([
+        api.get('/tickets/stats/overview'),
+        api.get('/tickets'),
+      ]);
+      setStats(statsRes.data);
+      setRecentTickets(ticketsRes.data.slice(0, 10));
     } catch (err) {
       setError('Dashboard konnte nicht geladen werden. Bitte erneut versuchen.');
     } finally {
@@ -32,14 +36,14 @@ export default function AdminDashboard() {
   }
 
   useEffect(() => {
-    loadStats();
+    loadData();
   }, []);
 
   if (loading) return <div className="text-center py-8 text-gray-500">Laden...</div>;
   if (error || !stats) return (
     <div className="text-center py-12">
       <p className="text-red-600 mb-4">{error || 'Fehler beim Laden'}</p>
-      <button onClick={loadStats} className="text-brand-600 hover:underline font-medium">
+      <button onClick={loadData} className="text-brand-600 hover:underline font-medium">
         Erneut laden
       </button>
     </div>
@@ -85,29 +89,14 @@ export default function AdminDashboard() {
         </div>
       </div>
 
-      {/* Recent Tickets */}
-      <div className="bg-white rounded-lg shadow-sm border p-6">
+      {/* Recent Tickets - full detail with TicketCards */}
+      <div>
         <div className="flex items-center justify-between mb-3">
           <h2 className="font-bold text-gray-800">Neueste Tickets</h2>
           <Link to="/tickets" className="text-sm text-brand-600 hover:underline">Alle anzeigen</Link>
         </div>
-        <div className="space-y-2">
-          {stats.recentTickets.map((t) => (
-            <Link
-              key={t.id}
-              to={`/tickets/${t.id}`}
-              className="flex items-center justify-between py-2 border-b last:border-0 hover:bg-gray-50 rounded px-2"
-            >
-              <div className="flex items-center gap-2">
-                <span className="text-xs font-mono text-gray-500">{t.ticket_id}</span>
-                <span className="text-sm truncate max-w-[200px]">{t.description}</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <UrgencyBadge urgency={t.urgency} />
-                <TicketStatusBadge status={t.status} />
-              </div>
-            </Link>
-          ))}
+        <div className="space-y-3">
+          {recentTickets.map((t) => <TicketCard key={t.id} ticket={t} />)}
         </div>
       </div>
     </div>
