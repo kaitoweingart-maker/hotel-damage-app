@@ -16,16 +16,34 @@ const HOTEL_NAMES = {
 export default function AdminDashboard() {
   const [stats, setStats] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState('');
+
+  async function loadStats() {
+    setLoading(true);
+    setError('');
+    try {
+      const { data } = await api.get('/tickets/stats/overview');
+      setStats(data);
+    } catch (err) {
+      setError('Dashboard konnte nicht geladen werden. Bitte erneut versuchen.');
+    } finally {
+      setLoading(false);
+    }
+  }
 
   useEffect(() => {
-    api.get('/tickets/stats/overview')
-      .then(({ data }) => setStats(data))
-      .catch(() => {})
-      .finally(() => setLoading(false));
+    loadStats();
   }, []);
 
   if (loading) return <div className="text-center py-8 text-gray-500">Laden...</div>;
-  if (!stats) return <div className="text-center py-8 text-gray-500">Fehler beim Laden</div>;
+  if (error || !stats) return (
+    <div className="text-center py-12">
+      <p className="text-red-600 mb-4">{error || 'Fehler beim Laden'}</p>
+      <button onClick={loadStats} className="text-brand-600 hover:underline font-medium">
+        Erneut laden
+      </button>
+    </div>
+  );
 
   return (
     <div>

@@ -5,6 +5,7 @@ import TicketCard from '../../components/TicketCard';
 export default function TicketListPage() {
   const [tickets, setTickets] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState('');
   const [statusFilter, setStatusFilter] = useState('');
   const [hotelFilter, setHotelFilter] = useState('');
 
@@ -14,13 +15,16 @@ export default function TicketListPage() {
 
   async function loadTickets() {
     setLoading(true);
+    setError('');
     try {
       const params = {};
       if (statusFilter) params.status = statusFilter;
       if (hotelFilter) params.hotel = hotelFilter;
       const { data } = await api.get('/tickets', { params });
       setTickets(data);
-    } catch {}
+    } catch (err) {
+      setError('Tickets konnten nicht geladen werden. Bitte erneut versuchen.');
+    }
     setLoading(false);
   }
 
@@ -57,6 +61,13 @@ export default function TicketListPage() {
 
       {loading ? (
         <div className="text-center py-8 text-gray-500">Laden...</div>
+      ) : error ? (
+        <div className="text-center py-12">
+          <p className="text-red-600 mb-4">{error}</p>
+          <button onClick={loadTickets} className="text-brand-600 hover:underline font-medium">
+            Erneut laden
+          </button>
+        </div>
       ) : tickets.length === 0 ? (
         <div className="text-center py-12 text-gray-500">Keine Tickets gefunden</div>
       ) : (

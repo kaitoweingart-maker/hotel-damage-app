@@ -6,12 +6,23 @@ import TicketCard from '../../components/TicketCard';
 export default function ReporterDashboard() {
   const [tickets, setTickets] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState('');
+
+  async function loadTickets() {
+    setLoading(true);
+    setError('');
+    try {
+      const { data } = await api.get('/tickets');
+      setTickets(data);
+    } catch (err) {
+      setError('Tickets konnten nicht geladen werden. Bitte erneut versuchen.');
+    } finally {
+      setLoading(false);
+    }
+  }
 
   useEffect(() => {
-    api.get('/tickets')
-      .then(({ data }) => setTickets(data))
-      .catch(() => {})
-      .finally(() => setLoading(false));
+    loadTickets();
   }, []);
 
   const open = tickets.filter((t) => t.status === 'open').length;
@@ -46,6 +57,13 @@ export default function ReporterDashboard() {
 
       {loading ? (
         <div className="text-center py-8 text-gray-500">Laden...</div>
+      ) : error ? (
+        <div className="text-center py-12">
+          <p className="text-red-600 mb-4">{error}</p>
+          <button onClick={loadTickets} className="text-brand-600 hover:underline font-medium">
+            Erneut laden
+          </button>
+        </div>
       ) : tickets.length === 0 ? (
         <div className="text-center py-12 text-gray-500">
           <p className="mb-4">Noch keine Meldungen erstellt</p>

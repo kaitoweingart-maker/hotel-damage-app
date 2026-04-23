@@ -25,15 +25,21 @@ export default function TicketDetailPage() {
   const [completionComment, setCompletionComment] = useState('');
   const [completionFiles, setCompletionFiles] = useState([]);
   const [showCompletion, setShowCompletion] = useState(false);
+  const [error, setError] = useState('');
 
   useEffect(() => { loadTicket(); }, [id]);
 
   async function loadTicket() {
+    setError('');
     try {
       const { data } = await api.get(`/tickets/${id}`);
       setTicket(data);
-    } catch {
-      navigate(-1);
+    } catch (err) {
+      if (err.response?.status === 404) {
+        navigate(-1);
+        return;
+      }
+      setError('Ticket konnte nicht geladen werden. Bitte erneut versuchen.');
     }
     setLoading(false);
   }
@@ -64,6 +70,14 @@ export default function TicketDetailPage() {
   }
 
   if (loading) return <div className="text-center py-8 text-gray-500">Laden...</div>;
+  if (error) return (
+    <div className="text-center py-12">
+      <p className="text-red-600 mb-4">{error}</p>
+      <button onClick={loadTicket} className="text-brand-600 hover:underline font-medium">
+        Erneut laden
+      </button>
+    </div>
+  );
   if (!ticket) return null;
 
   const canTakeAction = user.role === 'technician' || user.role === 'admin';

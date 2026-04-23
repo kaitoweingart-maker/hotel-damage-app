@@ -2,6 +2,7 @@ import axios from 'axios';
 
 const api = axios.create({
   baseURL: '/api',
+  timeout: 30000,
 });
 
 api.interceptors.request.use((config) => {
@@ -16,6 +17,15 @@ api.interceptors.response.use(
   (res) => res,
   async (error) => {
     const original = error.config;
+
+    // Auto-retry on network errors or timeouts (e.g. Render cold start)
+    if (!error.response && !original._retryCount) {
+      original._retryCount = 1;
+      await new Promise((r) => setTimeout(r, 2000));
+      return api(original);
+    }
+
+    // Refresh token on 401
     if (error.response?.status === 401 && !original._retry) {
       original._retry = true;
       const refreshToken = localStorage.getItem('refreshToken');

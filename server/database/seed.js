@@ -29,7 +29,7 @@ if (userCount > 0) {
   ensureUser('prize', '12345', 'Prize', 'reporter', 'PRZA');
   ensureUser('mulin', '12345', 'Mulin', 'reporter', 'MUBRIG');
   ensureUser('chalet', '12345', 'Chalet', 'reporter', 'HCSI');
-  ensureUser('rabo', '12345', 'Rabo', 'technician', 'MUBRIG');
+  ensureUser('rabo', '12345', 'Rabo', 'technician', 'HCSI');
   ensureUser('tomek', '12345', 'Tomek', 'technician', null);
 
   process.exit(0);
@@ -47,7 +47,7 @@ insertUser.run('kaito', hash('Amanthos12.'), 'Kaito', 'admin', null);
 insertUser.run('prize', hash('12345'), 'Prize', 'reporter', 'PRZA');
 insertUser.run('mulin', hash('12345'), 'Mulin', 'reporter', 'MUBRIG');
 insertUser.run('chalet', hash('12345'), 'Chalet', 'reporter', 'HCSI');
-insertUser.run('rabo', hash('12345'), 'Rabo', 'technician', 'MUBRIG');
+insertUser.run('rabo', hash('12345'), 'Rabo', 'technician', 'HCSI');
 insertUser.run('tomek', hash('12345'), 'Tomek', 'technician', null);
 
 console.log('Database seeded — users only, no sample tickets.');
