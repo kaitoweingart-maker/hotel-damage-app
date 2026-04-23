@@ -242,4 +242,18 @@ router.get('/stats/overview', authenticate, authorize('admin'), (req, res) => {
   res.json({ total, open, inProgress, completed, rejected, highUrgency, byHotel, recentTickets });
 });
 
+// DELETE /api/tickets/:id (admin only)
+router.delete('/:id', authenticate, authorize('admin'), (req, res) => {
+  const db = getDb();
+  const ticket = db.prepare('SELECT * FROM tickets WHERE id = ?').get(req.params.id);
+  if (!ticket) return res.status(404).json({ error: 'Ticket not found' });
+
+  db.prepare('DELETE FROM ticket_images WHERE ticket_id = ?').run(req.params.id);
+  db.prepare('DELETE FROM ticket_comments WHERE ticket_id = ?').run(req.params.id);
+  db.prepare('DELETE FROM notifications WHERE ticket_id = ?').run(req.params.id);
+  db.prepare('DELETE FROM tickets WHERE id = ?').run(req.params.id);
+
+  res.json({ success: true, deleted: ticket.ticket_id });
+});
+
 module.exports = router;
